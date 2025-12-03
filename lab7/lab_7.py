@@ -42,7 +42,7 @@
 # %% [markdown]
 # **Systemy rekomendacyjne (recommender systems)** to dowolne metody mające rekomendować użytkownikom (users) pewne przedmioty (items). Korzysta z nich praktycznie każda większa firma: Netflix (filmy - "Top picks for you"), Spotify (muzyka, "Recommended for playlist"), Amazon (sklep - "frequently bought together) etc. Mają niesamowicie praktyczne zastosowanie i są jednym z najwcześniej oraz najczęściej wdrażanych metod uczenia maszynowego.
 #
-# Jest to bardzo szeroka dziedzina, o bardzo różnorodnych podejściach. W szczególności można wyróżnić grupy: 
+# Jest to bardzo szeroka dziedzina, o bardzo różnorodnych podejściach. W szczególności można wyróżnić grupy:
 # 1. **Collaborative filtering (CF)** - oparte o historię interakcji użytkowników z przedmiotami, czyli zwykle o historię ocen. Stąd pochodzą np. rekomendacje "użytkownicy podobni do ciebie oglądali także X", gdzie podobieństwo mierzy się na podstawie tego, jak bardzo podobne mieliśmy w przeszłości oceny do innych użytkowników. Co ważne, takie podejście nie wymaga żadnej inżynierii cech, a jedynie zapamiętania historii ocen / transakcji / interakcji!
 # 2. **Content-based (CB)** - dużo bardziej podobne do klasycznego ML, tworzymy wektory cech dla przedmiotów, użytkowników i wykorzystujemy je w klasyfikacji (np. rekomendować lub nie) lub regresji (np. liczba gwiazdek).
 # 3. **Algorytmy hybrydowe** - łączące podejścia CF i CB podczas nauki. Są zazwyczaj bardziej złożone i wymagają odpowiednio dużych zbiorów danych.
@@ -91,9 +91,9 @@
 # u.data     -- The full u data set, 100000 ratings by 943 users on 1682 items.
 #               Each user has rated at least 20 movies.  Users and items are
 #               numbered consecutively from 1.  The data is randomly
-#               ordered. This is a tab separated list of 
-# 	         user id | item id | rating | timestamp. 
-#               The time stamps are unix seconds since 1/1/1970 UTC   
+#               ordered. This is a tab separated list of
+# 	         user id | item id | rating | timestamp.
+#               The time stamps are unix seconds since 1/1/1970 UTC
 # ```
 #
 # Zbiór co prawda ma już przygotowany podział do 5-krotnej walidacji skrośnej (pliki `u1.base`, `u1.test` etc.), ale my wykonamy ten podział sami. Gotowych podziałów używa się w pracach naukowych, aby móc porównywać wyniki różnych algorytmów na dokładnie tych samych zbiorach treningowych i testowych.
@@ -122,7 +122,7 @@ print(f"Number of reviews: {len(df)}")
 print(f"Ratings range: {df.rating.min(), df.rating.max()}")
 
 # %% [markdown]
-# Tabela w formacie jak powyżej to de facto słownik `(user_id, item_id) -> rating`. Jest zatem idealna do podejścia collaborative filtering, w którym dla **użytkowników (users)** mamy ich **oceny (ratings)** wybranych **przedmiotów (items)**. Tutaj oczywiście przedmiotami są filmy. Można by zatem z takich danych zbudować **macierz ocen (ratings matrix)**, w której wiersze byłyby użytkownikami, kolumny przedmiotami, a komórki zawierałyby oceny. 
+# Tabela w formacie jak powyżej to de facto słownik `(user_id, item_id) -> rating`. Jest zatem idealna do podejścia collaborative filtering, w którym dla **użytkowników (users)** mamy ich **oceny (ratings)** wybranych **przedmiotów (items)**. Tutaj oczywiście przedmiotami są filmy. Można by zatem z takich danych zbudować **macierz ocen (ratings matrix)**, w której wiersze byłyby użytkownikami, kolumny przedmiotami, a komórki zawierałyby oceny.
 #
 # ![Rating-matrix-representation-of-recommendation-data.png](attachment:Rating-matrix-representation-of-recommendation-data.png)
 #
@@ -234,15 +234,15 @@ class ItemAveragePredictor(AlgoBase):
 
     def fit(self, trainset):
         AlgoBase.fit(self, trainset)
-        
+
         # mapping: item_id -> average rating
         ...
-        
+
         # compute average rating for each item
         ...
 
         # your_code
-        
+
         return self
 
     def estimate(self, u, i):
@@ -309,7 +309,7 @@ def get_recommendations(predictions: list[Prediction]) -> pd.DataFrame:
     df_pivot = df_pred.pivot_table(
         index="user_id", columns="item_id", values="prediction"
     ).fillna(0)
-    
+
     df["recommendations"] = [
         get_user_recommendations(df_pivot.loc[user_id]) for user_id in df.index
     ]
@@ -389,12 +389,12 @@ rec_item_avg
 #
 # Następnie oblicz i wypisz MAP@k oraz FCP (k=10) dla naszego modelu średniej przedmiotu. Wartości podaj w procentach.
 
+
 # %% slideshow={"slide_type": ""} tags=["ex"]
 def ap_k(y_true: list[int], y_pred: list[int], k: int) -> float:
     ...
-    
-    # your_code
 
+    # your_code
 
 
 # %% slideshow={"slide_type": ""} tags=["ex"]
@@ -524,6 +524,7 @@ assert 0.59 <= fcp_item_avg <= 0.62
 #
 # Dokonaj predykcji i oblicz metryki za pomocą podanej funkcji. Skomentuj wynik w porównaniu do przewidywania średniej przedmiotu.
 
+
 # %% slideshow={"slide_type": ""} tags=["ex"]
 class BayesianAveragePredictor(AlgoBase):
     def __init__(self):
@@ -542,12 +543,12 @@ class BayesianAveragePredictor(AlgoBase):
 
         # compute rating sum for each item
         ...
-        
+
         # confidence (C)
         ...
 
         # your_code
-        
+
         return self
 
     def estimate(self, u, i):
@@ -556,9 +557,9 @@ class BayesianAveragePredictor(AlgoBase):
 
         # compute score formula
         ...
-            
+
         # your_code
-        
+
         return score
 
 
