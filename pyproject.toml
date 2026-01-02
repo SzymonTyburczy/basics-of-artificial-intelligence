@@ -4,8 +4,8 @@ version = "1.0.0"
 description = "Basics of Artificial Intelligence course at AGH"
 authors = []
 readme = "README.md"
-requires-python = ">=3.11,<4.0"
-
+python = ">=3.11,<3.14"
+torch = ">=2.8.0"
 dependencies = [
     "imbalanced-learn>=0.14.0",
     "jupyter",
